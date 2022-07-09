@@ -68,3 +68,11 @@ const userController = {
         res.status(500).json(err);
       });
   },
+
+  // delete user and their thoughts
+  deleteUser(req, res) {
+    User.findOneAndDelete({ _id: req.params.userId })
+      .then((dbUserData) => {
+        if (!dbUserData) {
+          return res.status(404).json({ message: 'No user with this id!' });
+        }
