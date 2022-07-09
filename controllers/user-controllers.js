@@ -14,7 +14,7 @@ const userController = {
       });
   },
 
-  // Get a single user by id
+  // Get a single user by id.
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
       .select("-__v")
@@ -34,7 +34,7 @@ const userController = {
       });
   },
 
-  // Create a  user
+  // Create a user.
   createUser(req, res) {
     User.create(req.body)
       .then((dbUserData) => {
@@ -46,7 +46,7 @@ const userController = {
       });
   },
 
-  // Update a user
+  // Update a user.
   updateUser(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
@@ -72,7 +72,7 @@ const userController = {
       });
   },
 
-  // delete user and their thoughts
+  // Delete user & their thoughts.
   deleteUser(req, res) {
     User.findOneAndDelete({ _id: req.params.userId })
       .then((dbUserData) => {
@@ -80,7 +80,7 @@ const userController = {
           return res.status(404).json({ message: "No user with this id!" });
         }
 
-        // get user id and delete their associate thoughts
+        // Get user id & delete associated thoughts.
         return Thought.deleteMany({ _id: { $in: dbUserData.thoughts } });
       })
       .then(() => {
@@ -92,7 +92,7 @@ const userController = {
       });
   },
 
-  // Add a friend
+  // Add a friend.
   addFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
@@ -113,7 +113,7 @@ const userController = {
       });
   },
 
-  // Remove a friend
+  // Remove a friend.
   removeFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
