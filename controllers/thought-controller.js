@@ -94,3 +94,22 @@ const thoughtController = {
           res.status(500).json(err);
         });
     },
+
+    // Add a reaction to a thought
+  addReaction(req, res) {
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $addToSet: { reactions: req.body } },
+      { runValidators: true, new: true }
+    )
+      .then((dbThoughtData) => {
+        if (!dbThoughtData) {
+          return res.status(404).json({ message: 'User with this ID does not exist.' });
+        }
+        res.json(dbThoughtData);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  },
